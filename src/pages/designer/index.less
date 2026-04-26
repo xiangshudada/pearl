@@ -142,11 +142,149 @@
     color: var(--color-secondary-text);
   }
 
-  &__search-icon {
-    padding: 16rpx 24rpx;
-    cursor: pointer;
-    font-size: 32rpx;
+  &__filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 6rpx;
+    padding: 12rpx 22rpx;
+    margin: 0 16rpx;
+    border-radius: 100rpx;
+    background: var(--color-surface);
+    border: 1.5rpx solid var(--color-border);
     flex-shrink: 0;
+    position: relative;
+    transition: background 0.18s, border-color 0.18s;
+
+    &--active {
+      background: rgba(168, 114, 30, 0.08);
+      border-color: var(--color-primary);
+
+      .designer-page__filter-btn-icon,
+      .designer-page__filter-btn-text {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  &__filter-btn-icon {
+    font-size: 22rpx;
+    color: var(--color-secondary-text);
+    line-height: 1;
+  }
+
+  &__filter-btn-text {
+    font-size: 24rpx;
+    color: var(--color-secondary-text);
+    letter-spacing: 0.3px;
+  }
+
+  &__filter-btn-badge {
+    position: absolute;
+    top: -10rpx;
+    right: -10rpx;
+    background: var(--color-primary);
+    border-radius: 100rpx;
+    min-width: 30rpx;
+    height: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5rpx;
+    box-shadow: 0 2px 6px rgba(168, 114, 30, 0.4);
+  }
+
+  &__filter-btn-badge-text {
+    font-size: 18rpx;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  // Active filter tags bar
+  &__filter-bar {
+    flex-shrink: 0;
+    border-bottom: 1rpx solid var(--color-border);
+    background: rgba(168, 114, 30, 0.03);
+    animation: filter-bar-slide-in 0.2s ease;
+  }
+
+  &__filter-bar-scroll {
+    width: 100%;
+  }
+
+  &__filter-tags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10rpx;
+    padding: 12rpx 16rpx;
+    white-space: nowrap;
+  }
+
+  &__filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8rpx;
+    padding: 8rpx 8rpx 8rpx 16rpx;
+    background: rgba(168, 114, 30, 0.07);
+    border: 1.5rpx solid rgba(168, 114, 30, 0.3);
+    border-radius: 100rpx;
+    flex-shrink: 0;
+  }
+
+  &__filter-tag-label {
+    font-size: 20rpx;
+    color: rgba(168, 114, 30, 0.6);
+    letter-spacing: 0.3px;
+  }
+
+  &__filter-tag-text {
+    font-size: 22rpx;
+    color: var(--color-primary);
+    font-weight: 600;
+    max-width: 160rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__filter-tag-close {
+    width: 32rpx;
+    height: 32rpx;
+    border-radius: 50%;
+    background: rgba(168, 114, 30, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    &:active {
+      background: rgba(168, 114, 30, 0.28);
+    }
+  }
+
+  &__filter-tag-close-icon {
+    font-size: 24rpx;
+    color: var(--color-primary);
+    line-height: 1;
+    font-weight: 400;
+  }
+
+  &__filter-clear-all {
+    display: inline-flex;
+    align-items: center;
+    padding: 8rpx 18rpx;
+    border-radius: 100rpx;
+    border: 1rpx dashed var(--color-border);
+    flex-shrink: 0;
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
+
+  &__filter-clear-all-text {
+    font-size: 21rpx;
+    color: var(--color-secondary-text);
+    letter-spacing: 0.3px;
   }
 
   &__panel-body {
@@ -370,6 +508,15 @@
     font-size: 32rpx;
     font-weight: 700;
     color: var(--color-text);
+    display: block;
+  }
+
+  &__search-active-hint {
+    font-size: 22rpx;
+    color: var(--color-primary);
+    display: block;
+    margin-top: 4rpx;
+    font-weight: 600;
   }
 
   &__search-close {
@@ -382,6 +529,7 @@
   &__search-body {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 24rpx 32rpx;
   }
 
@@ -416,24 +564,29 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12rpx;
+    row-gap: 14rpx;
   }
 
   &__chip {
     padding: 10rpx 24rpx;
     border-radius: 100rpx;
-    border: 1rpx solid var(--color-border);
+    border: 1.5rpx solid var(--color-border);
     background: var(--color-surface);
     cursor: pointer;
     transition: all 0.15s;
 
     &--active {
       border-color: var(--color-primary);
-      background: rgba(103, 80, 164, 0.1);
+      background: rgba(168, 114, 30, 0.09);
 
       .designer-page__chip-text {
         color: var(--color-primary);
-        font-weight: 600;
+        font-weight: 700;
       }
+    }
+
+    &:active {
+      opacity: 0.75;
     }
 
     &-text {
@@ -491,5 +644,16 @@
       color: #fff;
       font-weight: 600;
     }
+  }
+}
+
+@keyframes filter-bar-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

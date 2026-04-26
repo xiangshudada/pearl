@@ -85,18 +85,18 @@ export default function DesignerPage() {
     setSubCategories(tab?.children || [])
   }
 
-  const loadMaterials = async () => {
+  const loadMaterials = async (overrides?: { name?: string; wuxing?: string; size?: number }) => {
     setMaterialsLoading(true)
     try {
-      const params: Parameters<typeof getMaterials>[0] = {
-        per_page: 50,
-      }
-      if (activeCategoryId !== ALL_CATEGORY_ID) {
-        params.category_id = activeCategoryId
-      }
-      if (searchName) params.name = searchName
-      if (filterWuxing) params.wuxing = filterWuxing
-      if (filterSize) params.size_mm = filterSize
+      const name = overrides?.name !== undefined ? overrides.name : searchName
+      const wuxing = overrides?.wuxing !== undefined ? overrides.wuxing : filterWuxing
+      const size = overrides?.size !== undefined ? overrides.size : filterSize
+
+      const params: Parameters<typeof getMaterials>[0] = { per_page: 50 }
+      if (activeCategoryId !== ALL_CATEGORY_ID) params.category_id = activeCategoryId
+      if (name) params.name = name
+      if (wuxing) params.wuxing = wuxing
+      if (size) params.size_mm = size
 
       const res = await getMaterials(params)
       setMaterials(res.items || [])
@@ -218,7 +218,22 @@ export default function DesignerPage() {
     setSearchName('')
     setFilterWuxing('')
     setFilterSize(0)
+    if (activeCategoryId !== USING_CATEGORY_ID) {
+      loadMaterials({ name: '', wuxing: '', size: 0 })
+    }
   }
+
+  const clearFilterTag = (field: 'name' | 'wuxing' | 'size') => {
+    const next = { name: searchName, wuxing: filterWuxing, size: filterSize }
+    if (field === 'name') { setSearchName(''); next.name = '' }
+    if (field === 'wuxing') { setFilterWuxing(''); next.wuxing = '' }
+    if (field === 'size') { setFilterSize(0); next.size = 0 }
+    if (activeCategoryId !== USING_CATEGORY_ID) {
+      loadMaterials({ name: next.name, wuxing: next.wuxing, size: next.size })
+    }
+  }
+
+  const activeFilterCount = [searchName, filterWuxing, filterSize].filter(Boolean).length
 
   const displayMaterials =
     activeCategoryId === USING_CATEGORY_ID ? [] : materials
@@ -260,7 +275,7 @@ export default function DesignerPage() {
 
       {/* Material Panel */}
       <View className='designer-page__panel'>
-        {/* Tab + Search row */}
+        {/* Tab + Filter button row */}
         <View className='designer-page__tab-row'>
           <ScrollView className='designer-page__tabs' scrollX showScrollbar={false}>
             <View className='designer-page__tabs-inner'>
@@ -275,10 +290,58 @@ export default function DesignerPage() {
               ))}
             </View>
           </ScrollView>
-          <View className='designer-page__search-icon' onClick={() => setShowSearch(true)}>
-            <Text>🔍</Text>
+          <View
+            className={`designer-page__filter-btn ${activeFilterCount > 0 ? 'designer-page__filter-btn--active' : ''}`}
+            onClick={() => setShowSearch(true)}
+          >
+            <Text className='designer-page__filter-btn-icon'>⊟</Text>
+            <Text className='designer-page__filter-btn-text'>筛选</Text>
+            {activeFilterCount > 0 && (
+              <View className='designer-page__filter-btn-badge'>
+                <Text className='designer-page__filter-btn-badge-text'>{activeFilterCount}</Text>
+              </View>
+            )}
           </View>
         </View>
+
+        {/* Active filter tags bar */}
+        {activeFilterCount > 0 && (
+          <View className='designer-page__filter-bar'>
+            <ScrollView className='designer-page__filter-bar-scroll' scrollX showScrollbar={false}>
+              <View className='designer-page__filter-tags'>
+                {searchName ? (
+                  <View className='designer-page__filter-tag'>
+                    <Text className='designer-page__filter-tag-text'>"{searchName}"</Text>
+                    <View className='designer-page__filter-tag-close' onClick={() => clearFilterTag('name')}>
+                      <Text className='designer-page__filter-tag-close-icon'>×</Text>
+                    </View>
+                  </View>
+                ) : null}
+                {filterWuxing ? (
+                  <View className='designer-page__filter-tag'>
+                    <Text className='designer-page__filter-tag-label'>五行</Text>
+                    <Text className='designer-page__filter-tag-text'>{filterWuxing}</Text>
+                    <View className='designer-page__filter-tag-close' onClick={() => clearFilterTag('wuxing')}>
+                      <Text className='designer-page__filter-tag-close-icon'>×</Text>
+                    </View>
+                  </View>
+                ) : null}
+                {filterSize ? (
+                  <View className='designer-page__filter-tag'>
+                    <Text className='designer-page__filter-tag-label'>尺寸</Text>
+                    <Text className='designer-page__filter-tag-text'>{filterSize}mm</Text>
+                    <View className='designer-page__filter-tag-close' onClick={() => clearFilterTag('size')}>
+                      <Text className='designer-page__filter-tag-close-icon'>×</Text>
+                    </View>
+                  </View>
+                ) : null}
+                <View className='designer-page__filter-clear-all' onClick={handleSearchReset}>
+                  <Text className='designer-page__filter-clear-all-text'>清除全部</Text>
+                </View>
+              </View>
+            </ScrollView>
+          </View>
+        )}
 
         <View className='designer-page__panel-body'>
           {/* Left: Sub category sidebar */}
@@ -383,7 +446,12 @@ export default function DesignerPage() {
         <View className='designer-page__search-overlay'>
           <View className='designer-page__search-panel'>
             <View className='designer-page__search-header'>
-              <Text className='designer-page__search-title'>搜索与筛选</Text>
+              <View>
+                <Text className='designer-page__search-title'>搜索与筛选</Text>
+                {activeFilterCount > 0 && (
+                  <Text className='designer-page__search-active-hint'>已应用 {activeFilterCount} 个筛选</Text>
+                )}
+              </View>
               <View onClick={() => setShowSearch(false)}>
                 <Text className='designer-page__search-close'>×</Text>
               </View>

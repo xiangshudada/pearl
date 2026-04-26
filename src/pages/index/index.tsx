@@ -87,7 +87,7 @@ export default function IndexPage() {
       <View className='index-page__section'>
         <View className='index-page__section-header'>
           <Text className='index-page__section-title'>设计广场</Text>
-          <Text className='index-page__section-subtitle'>热门作品精选</Text>
+          <Text className='index-page__section-more' onClick={() => Taro.navigateTo({ url: '/pages/designs/index' })}>更多 »</Text>
         </View>
 
         {loading && designs.length === 0 ? (
@@ -124,7 +124,7 @@ export default function IndexPage() {
         )}
 
         {/* More link */}
-        <View className='index-page__more' onClick={goToDesigner}>
+        <View className='index-page__more' onClick={() => Taro.navigateTo({ url: '/pages/designs/index' })}>
           <Text className='index-page__more-text'>更多设计作品，进入设计广场 →</Text>
         </View>
       </View>

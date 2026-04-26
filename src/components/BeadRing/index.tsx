@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import type { ITouchEvent } from '@tarojs/components'
 import type { DesignItem } from '@/types'
@@ -17,6 +17,8 @@ interface BeadRingProps {
 interface FlatBead {
   color: string
   name: string
+  image_url?: string
+  size_mm: number
   beadIndex: number
   subIndex: number
 }
@@ -50,7 +52,7 @@ export default function BeadRing({
     const qty = Math.min(bead.quantity, 30)
     for (let j = 0; j < qty; j++) {
       if (flatBeads.length >= MAX_BEADS) break
-      flatBeads.push({ color: bead.color, name: bead.name, beadIndex: i, subIndex: j })
+      flatBeads.push({ color: bead.color, name: bead.name, image_url: bead.image_url, size_mm: bead.size_mm, beadIndex: i, subIndex: j })
     }
     if (flatBeads.length >= MAX_BEADS) break
   }
@@ -59,8 +61,9 @@ export default function BeadRing({
   const cx = size / 2
   const cy = size / 2
   const R = size * 0.35
-  const beadSz = total > 30 ? 10 : total > 20 ? 12 : total > 10 ? 14 : 16
-  const ghostSz = beadSz * 1.5
+  // base pixel size at 8mm reference, scaled by bead count
+  const basePx = total > 30 ? 10 : total > 20 ? 12 : total > 10 ? 14 : 16
+  const beadPxOf = (sizeMm: number) => Math.max(8, Math.min(28, Math.round(basePx * sizeMm / 8)))
   const px = (v: number) => `${v}px`
 
   const fetchBounds = (cb: (b: { left: number; top: number }) => void) => {
@@ -76,7 +79,9 @@ export default function BeadRing({
       .exec()
   }
 
-  const computeInfo = (touchX: number, touchY: number, bounds: { left: number; top: number }) => {
+  const ghostSzOf = (beadIndex: number) => beadPxOf(flatBeads[beadIndex]?.size_mm ?? 8) * 1.5
+
+  const computeInfo = (touchX: number, touchY: number, bounds: { left: number; top: number }, dragBeadIndex: number) => {
     const centerX = bounds.left + cx
     const centerY = bounds.top + cy
     const dx = touchX - centerX
@@ -89,6 +94,7 @@ export default function BeadRing({
     if (angle >= 2 * Math.PI) angle -= 2 * Math.PI
     const targetFlatIndex = total === 0 ? 0 : Math.round((angle / (2 * Math.PI)) * total) % total
 
+    const ghostSz = ghostSzOf(dragBeadIndex)
     const ghostX = touchX - bounds.left - ghostSz / 2
     const ghostY = touchY - bounds.top - ghostSz / 2
 
@@ -102,14 +108,16 @@ export default function BeadRing({
 
     fetchBounds((bounds) => {
       let nearestIdx = -1
-      let nearestDist = beadSz * 1.8
+      let nearestDist = Infinity
 
       for (let idx = 0; idx < total; idx++) {
+        const fb = flatBeads[idx]
+        const hitR = beadPxOf(fb.size_mm) * 1.8
         const angle = (idx / total) * 2 * Math.PI - Math.PI / 2
         const bx = bounds.left + cx + R * Math.cos(angle)
         const by = bounds.top + cy + R * Math.sin(angle)
         const d = Math.sqrt((touch.clientX - bx) ** 2 + (touch.clientY - by) ** 2)
-        if (d < nearestDist) {
+        if (d < hitR && d < nearestDist) {
           nearestDist = d
           nearestIdx = idx
         }
@@ -117,7 +125,7 @@ export default function BeadRing({
 
       if (nearestIdx === -1) return
       const fb = flatBeads[nearestIdx]
-      const info = computeInfo(touch.clientX, touch.clientY, bounds)
+      const info = computeInfo(touch.clientX, touch.clientY, bounds, fb.beadIndex)
       setDrag({ beadIndex: fb.beadIndex, flatIndex: nearestIdx, ...info })
     })
   }
@@ -125,7 +133,7 @@ export default function BeadRing({
   const handleTouchMove = (e: ITouchEvent) => {
     if (!drag || !boundsRef.current) return
     const touch = e.changedTouches[0]
-    const info = computeInfo(touch.clientX, touch.clientY, boundsRef.current)
+    const info = computeInfo(touch.clientX, touch.clientY, boundsRef.current, drag.beadIndex)
     setDrag(prev => prev ? { ...prev, ...info } : null)
   }
 
@@ -208,6 +216,7 @@ export default function BeadRing({
 
       {/* Beads */}
       {flatBeads.map((fb, idx) => {
+        const beadSz = beadPxOf(fb.size_mm)
         const angle = (idx / total) * 2 * Math.PI - Math.PI / 2
         const x = cx + R * Math.cos(angle) - beadSz / 2
         const y = cy + R * Math.sin(angle) - beadSz / 2
@@ -225,6 +234,7 @@ export default function BeadRing({
               width: px(beadSz),
               height: px(beadSz),
               borderRadius: '50%',
+              overflow: 'hidden',
               backgroundColor: isTarget ? 'transparent' : fb.color,
               border: isTarget ? `2px solid ${fb.color}` : 'none',
               boxShadow: isSource
@@ -241,28 +251,49 @@ export default function BeadRing({
                 onRemoveBead(fb.beadIndex)
               }
             }}
-          />
+          >
+            {!isTarget && fb.image_url ? (
+              <Image
+                src={fb.image_url}
+                style={{ width: '100%', height: '100%', display: 'block' }}
+                mode='aspectFill'
+              />
+            ) : null}
+          </View>
         )
       })}
 
       {/* Ghost bead following finger */}
-      {isDragging && drag && (
-        <View
-          className='bead-ring__ghost'
-          style={{
-            position: 'absolute',
-            left: px(drag.ghostX),
-            top: px(drag.ghostY),
-            width: px(ghostSz),
-            height: px(ghostSz),
-            borderRadius: '50%',
-            backgroundColor: beads[drag.beadIndex]?.color ?? '#ccc',
-            boxShadow: `0 6px 20px rgba(0,0,0,0.35), inset 0 2px 4px rgba(255,255,255,0.5)`,
-            zIndex: 20,
-            pointerEvents: 'none',
-          }}
-        />
-      )}
+      {isDragging && drag && (() => {
+        const dragBead = beads[drag.beadIndex]
+        const ghostSz = ghostSzOf(drag.beadIndex)
+        return (
+          <View
+            className='bead-ring__ghost'
+            style={{
+              position: 'absolute',
+              left: px(drag.ghostX),
+              top: px(drag.ghostY),
+              width: px(ghostSz),
+              height: px(ghostSz),
+              borderRadius: '50%',
+              overflow: 'hidden',
+              backgroundColor: dragBead?.color ?? '#ccc',
+              boxShadow: `0 6px 20px rgba(0,0,0,0.35), inset 0 2px 4px rgba(255,255,255,0.5)`,
+              zIndex: 20,
+              pointerEvents: 'none',
+            }}
+          >
+            {dragBead?.image_url ? (
+              <Image
+                src={dragBead.image_url}
+                style={{ width: '100%', height: '100%', display: 'block' }}
+                mode='aspectFill'
+              />
+            ) : null}
+          </View>
+        )
+      })()}
 
       {/* Delete zone */}
       <View

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { View, Text, ScrollView, Input } from '@tarojs/components'
+import { View, Text, ScrollView, Input, Image } from '@tarojs/components'
 import Taro, { useDidShow } from '@tarojs/taro'
 import BeadRing from '@/components/BeadRing'
 import MaterialItem from '@/components/MaterialItem'
@@ -328,8 +328,16 @@ export default function DesignerPage() {
                       <View className='designer-page__using-card'>
                         <View
                           className='designer-page__using-ball'
-                          style={{ backgroundColor: bead.color }}
-                        />
+                          style={{ backgroundColor: bead.color, overflow: 'hidden' }}
+                        >
+                          {bead.image_url ? (
+                            <Image
+                              src={bead.image_url}
+                              style={{ width: '100%', height: '100%', display: 'block' }}
+                              mode='aspectFill'
+                            />
+                          ) : null}
+                        </View>
                         <Text className='designer-page__using-card-name' numberOfLines={1}>{bead.name}</Text>
                         <Text className='designer-page__using-card-size'>{bead.size_mm}mm</Text>
                         <Text className='designer-page__using-card-price'>{formatPrice(bead.price * bead.quantity)}</Text>

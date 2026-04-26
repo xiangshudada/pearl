@@ -38,6 +38,7 @@ export interface DesignItem {
   name: string
   size_mm: number
   color: string
+  image_url?: string
   price: number
   quantity: number
   position: number

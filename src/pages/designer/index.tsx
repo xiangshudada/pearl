@@ -23,6 +23,8 @@ export default function DesignerPage() {
     totalPrice,
     addBead,
     removeBead,
+    removeSingleBead,
+    moveBead,
     clearBeads,
     reset,
   } = useDesignerStore()
@@ -117,6 +119,20 @@ export default function DesignerPage() {
       removeBead(index)
     },
     [removeBead]
+  )
+
+  const handleMoveBead = useCallback(
+    (fromIndex: number, toIndex: number) => {
+      moveBead(fromIndex, toIndex)
+    },
+    [moveBead]
+  )
+
+  const handleRemoveSingleBead = useCallback(
+    (index: number) => {
+      removeSingleBead(index)
+    },
+    [removeSingleBead]
   )
 
   const handleClear = () => {
@@ -232,6 +248,8 @@ export default function DesignerPage() {
           size={260}
           interactive
           onRemoveBead={handleRemoveBead}
+          onMoveBead={handleMoveBead}
+          onRemoveSingleBead={handleRemoveSingleBead}
         />
         {beads.length > 0 && (
           <View className='designer-page__finish-btn' onClick={handleFinish}>
@@ -306,20 +324,25 @@ export default function DesignerPage() {
                   </View>
                 ) : (
                   beads.map((bead, i) => (
-                    <View key={i} className='designer-page__using-item'>
-                      <View
-                        className='designer-page__using-dot'
-                        style={{ backgroundColor: bead.color }}
-                      />
-                      <View className='designer-page__using-info'>
-                        <Text className='designer-page__using-name'>{bead.name}</Text>
-                        <Text className='designer-page__using-detail'>
-                          {bead.size_mm}mm · × {bead.quantity}
-                        </Text>
+                    <View key={i} className='designer-page__material-cell'>
+                      <View className='designer-page__using-card'>
+                        <View
+                          className='designer-page__using-ball'
+                          style={{ backgroundColor: bead.color }}
+                        />
+                        <Text className='designer-page__using-card-name' numberOfLines={1}>{bead.name}</Text>
+                        <Text className='designer-page__using-card-size'>{bead.size_mm}mm</Text>
+                        <Text className='designer-page__using-card-price'>{formatPrice(bead.price * bead.quantity)}</Text>
+                        <View className='designer-page__using-card-footer'>
+                          <Text className='designer-page__using-card-qty'>× {bead.quantity}</Text>
+                          <View
+                            className='designer-page__using-card-remove'
+                            onClick={() => handleRemoveBead(i)}
+                          >
+                            <Text className='designer-page__using-card-remove-text'>−</Text>
+                          </View>
+                        </View>
                       </View>
-                      <Text className='designer-page__using-price'>
-                        {formatPrice(bead.price * bead.quantity)}
-                      </Text>
                     </View>
                   ))
                 )}

@@ -10,6 +10,8 @@ interface DesignerStore {
   totalPrice: number
   addBead: (material: Material) => void
   removeBead: (index: number) => void
+  removeSingleBead: (index: number) => void
+  moveBead: (fromIndex: number, toIndex: number) => void
   clearBeads: () => void
   setDesignName: (name: string) => void
   loadDesign: (design: Design) => void
@@ -81,11 +83,27 @@ export const useDesignerStore = create<DesignerStore>((set, get) => ({
   removeBead: (index: number) => {
     const { beads } = get()
     const newBeads = beads.filter((_, i) => i !== index)
-    set({
-      beads: newBeads,
-      wristSize: calcWristSize(newBeads),
-      totalPrice: calcTotalPrice(newBeads),
-    })
+    set({ beads: newBeads, wristSize: calcWristSize(newBeads), totalPrice: calcTotalPrice(newBeads) })
+  },
+
+  removeSingleBead: (index: number) => {
+    const { beads } = get()
+    const bead = beads[index]
+    if (!bead) return
+    const newBeads = bead.quantity <= 1
+      ? beads.filter((_, i) => i !== index)
+      : beads.map((b, i) => i === index ? { ...b, quantity: b.quantity - 1 } : b)
+    set({ beads: newBeads, wristSize: calcWristSize(newBeads), totalPrice: calcTotalPrice(newBeads) })
+  },
+
+  moveBead: (fromIndex: number, toIndex: number) => {
+    const { beads } = get()
+    if (fromIndex === toIndex) return
+    const newBeads = [...beads]
+    const [item] = newBeads.splice(fromIndex, 1)
+    const insertAt = fromIndex < toIndex ? toIndex - 1 : toIndex
+    newBeads.splice(insertAt, 0, item)
+    set({ beads: newBeads, wristSize: calcWristSize(newBeads), totalPrice: calcTotalPrice(newBeads) })
   },
 
   clearBeads: () => {

@@ -223,46 +223,87 @@
     // container for MaterialItem grid mode
   }
 
-  &__using-item {
+  &__using-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 20rpx 16rpx;
+    padding: 14rpx 8rpx 12rpx;
+    border-radius: 12rpx;
     background: var(--color-white);
-    border-bottom: 1rpx solid var(--color-border);
-    gap: 16rpx;
+    border: 1rpx solid var(--color-border);
   }
 
-  &__using-dot {
-    width: 32rpx;
-    height: 32rpx;
+  &__using-ball {
+    width: 72rpx;
+    height: 72rpx;
     border-radius: 50%;
     flex-shrink: 0;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+    margin-bottom: 8rpx;
   }
 
-  &__using-info {
-    flex: 1;
-  }
-
-  &__using-name {
-    font-size: 26rpx;
+  &__using-card-name {
+    font-size: 21rpx;
     color: var(--color-text);
     font-weight: 500;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     display: block;
   }
 
-  &__using-detail {
-    font-size: 22rpx;
+  &__using-card-size {
+    font-size: 19rpx;
     color: var(--color-secondary-text);
     display: block;
-    margin-top: 4rpx;
+    margin-top: 2rpx;
   }
 
-  &__using-price {
-    font-size: 26rpx;
+  &__using-card-price {
+    font-size: 21rpx;
     color: var(--color-primary);
-    font-weight: 600;
-    flex-shrink: 0;
+    font-weight: 700;
+    display: block;
+    margin-top: 2rpx;
+  }
+
+  &__using-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10rpx;
+    padding-top: 8rpx;
+    border-top: 1rpx solid var(--color-border);
+  }
+
+  &__using-card-qty {
+    font-size: 20rpx;
+    color: var(--color-secondary-text);
+  }
+
+  &__using-card-remove {
+    width: 36rpx;
+    height: 36rpx;
+    border-radius: 50%;
+    background: rgba(192, 57, 43, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:active {
+      background: rgba(192, 57, 43, 0.22);
+    }
+  }
+
+  &__using-card-remove-text {
+    font-size: 28rpx;
+    color: var(--color-error);
+    font-weight: 400;
+    line-height: 1;
+    margin-top: -2rpx;
   }
 
   &__loading {

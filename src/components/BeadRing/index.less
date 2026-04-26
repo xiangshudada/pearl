@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 
   &__track {
     pointer-events: none;
@@ -16,14 +17,40 @@
   }
 
   &__bead {
-    transition: transform 0.15s ease;
     z-index: 3;
 
     &--interactive {
       &:active {
-        transform: scale(1.4);
+        transform: scale(1.5);
         box-shadow: 0 2px 8px rgba(103, 80, 164, 0.5) !important;
       }
     }
+
+    &--source {
+      transition: none !important;
+    }
   }
+
+  &__ghost {
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  &__delete-zone {
+    pointer-events: none;
+    transition: opacity 0.2s, background 0.18s, border-color 0.18s;
+
+    &--visible {
+      opacity: 1 !important;
+    }
+
+    &--active {
+      animation: delete-pulse 0.6s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes delete-pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.04); }
 }

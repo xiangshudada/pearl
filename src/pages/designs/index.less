@@ -12,19 +12,19 @@
   }
 
   &__sort-btn {
-    padding: 10rpx 24rpx;
+    padding: 10rpx 28rpx;
     border-radius: 100rpx;
     border: 1rpx solid var(--color-border);
     background: var(--color-surface);
-    transition: all 0.15s;
+    transition: all 0.18s;
 
     &--active {
-      border-color: var(--color-primary);
-      background: rgba(103, 80, 164, 0.1);
+      border-color: #A8721E;
+      background: #FDF0DC;
 
       .designs-page__sort-text {
-        color: var(--color-primary);
-        font-weight: 600;
+        color: #A8721E;
+        font-weight: 700;
       }
     }
   }
@@ -36,8 +36,8 @@
 
   &__waterfall {
     display: flex;
-    gap: 12rpx;
-    padding: 16rpx;
+    gap: 14rpx;
+    padding: 18rpx 16rpx;
     align-items: flex-start;
   }
 
@@ -45,11 +45,10 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12rpx;
   }
 
   &__loading {
-    padding: 60rpx 0;
+    padding: 80rpx 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,7 +56,8 @@
 
   &__loading-text {
     font-size: 26rpx;
-    color: #ccc;
+    color: var(--color-secondary-text);
+    letter-spacing: 1px;
   }
 
   &__empty {
@@ -70,18 +70,20 @@
 
   &__empty-text {
     font-size: 28rpx;
-    color: #ccc;
+    color: #C4B49A;
+    letter-spacing: 1px;
   }
 
   &__load-more {
-    padding: 32rpx;
+    padding: 36rpx;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   &__load-more-text {
-    font-size: 24rpx;
+    font-size: 23rpx;
     color: var(--color-secondary-text);
+    letter-spacing: 0.5px;
   }
 }

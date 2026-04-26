@@ -66,28 +66,30 @@
     align-items: center;
     justify-content: center;
     padding: 24rpx 0 16rpx;
-    background: var(--color-surface);
+    background: radial-gradient(ellipse at center, #F5EDE0 0%, #EDE3D2 100%);
     position: relative;
   }
 
   &__finish-btn {
     margin-top: 16rpx;
     padding: 16rpx 48rpx;
-    background: var(--color-primary);
+    background: linear-gradient(135deg, #C4903A 0%, #DEB96A 100%);
     border-radius: var(--radius-button);
-    box-shadow: var(--shadow-button);
+    box-shadow: 0 4px 20px rgba(196, 144, 58, 0.45);
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: opacity 0.15s, transform 0.15s;
 
     &:active {
       opacity: 0.8;
+      transform: scale(0.96);
     }
   }
 
   &__finish-text {
     font-size: 28rpx;
-    color: #fff;
-    font-weight: 600;
+    color: #12090A;
+    font-weight: 700;
+    letter-spacing: 0.5px;
   }
 
   &__panel {

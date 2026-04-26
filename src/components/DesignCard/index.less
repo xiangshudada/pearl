@@ -1,62 +1,77 @@
 .design-card {
-  background: var(--color-white);
-  border-radius: var(--radius-card);
+  background: #FFFFFF;
+  border-radius: 16rpx;
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 2px 14px rgba(120, 80, 20, 0.09), 0 1px 3px rgba(120, 80, 20, 0.05);
+  border: 1rpx solid rgba(168, 114, 30, 0.1);
   margin-bottom: 16rpx;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fade-up 0.4s ease both;
 
   &:active {
     transform: scale(0.97);
-    box-shadow: 0 1px 4px rgba(103, 80, 164, 0.08);
+    box-shadow: 0 1px 6px rgba(120, 80, 20, 0.12);
   }
 
+  /* ── Preview image area ── */
   &__preview {
     width: 100%;
     padding-top: 100%;
     position: relative;
-    background: var(--color-surface);
+    background: #F5EDE0;
+    overflow: hidden;
   }
 
   &__img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
   }
 
+  /* Pearl shimmer placeholder */
   &__placeholder {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #EADDff 0%, #D0BCFF 100%);
+    background: linear-gradient(
+      120deg,
+      #F5EDE0 0%,
+      #FAF2E6 20%,
+      #EDE0CC 35%,
+      #F5EDE0 50%,
+      #EAD8C0 65%,
+      #FAF2E6 80%,
+      #F5EDE0 100%
+    );
+    background-size: 300% 100%;
+    animation: gem-shimmer 3.5s linear infinite;
 
     &-text {
-      font-size: 48rpx;
-      color: #6750A4;
-      font-weight: 700;
+      font-size: 72rpx;
+      opacity: 0.1;
+      user-select: none;
     }
   }
 
+  /* ── Info block ── */
   &__info {
-    padding: 16rpx;
+    padding: 16rpx 18rpx 18rpx;
   }
 
   &__name {
-    font-size: 28rpx;
+    font-size: 26rpx;
     font-weight: 600;
-    color: var(--color-text);
+    color: #221508;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    letter-spacing: 0.2px;
   }
 
   &__meta {
@@ -67,30 +82,33 @@
   }
 
   &__author {
-    font-size: 22rpx;
-    color: var(--color-secondary-text);
+    font-size: 20rpx;
+    color: #B4A08A;
   }
 
   &__use-count {
-    font-size: 20rpx;
-    color: #999;
+    font-size: 19rpx;
+    color: #C4B49A;
   }
 
   &__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 8rpx;
+    margin-top: 12rpx;
+    padding-top: 12rpx;
+    border-top: 1rpx solid rgba(168, 114, 30, 0.08);
   }
 
   &__price {
-    font-size: 26rpx;
+    font-size: 25rpx;
     font-weight: 700;
-    color: var(--color-primary);
+    color: #A8721E;
+    letter-spacing: 0.2px;
   }
 
   &__likes {
-    font-size: 20rpx;
-    color: #999;
+    font-size: 19rpx;
+    color: #C4B49A;
   }
 }

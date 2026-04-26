@@ -1,31 +1,62 @@
 page {
-  --color-primary: #6750A4;
-  --color-primary-light: #EADDff;
-  --color-background: #fef7ff;
-  --color-surface: #F7F2FA;
-  --color-secondary-text: #625B71;
-  --color-border: #CAC4D0;
-  --color-text: #1C1B1F;
-  --color-text-light: #49454F;
-  --color-white: #ffffff;
-  --color-error: #B3261E;
-  --color-success: #386A20;
+  /* === 珍珠白 · Ivory Atelier === */
 
+  /* Surfaces */
+  --color-background:    #FBF7F1;
+  --color-surface:       #F3EDE4;
+  --color-white:         #FFFFFF;
+  --color-overlay:       #EDE5D8;
+
+  /* Brand */
+  --color-primary:       #A8721E;   /* deep amber gold */
+  --color-primary-light: #FDF0DC;
+  --color-gold-bright:   #C8921E;
+  --color-amethyst:      #6B4FA0;   /* deep crystal purple, used as accent */
+
+  /* Text */
+  --color-text:          #221508;   /* deep warm dark */
+  --color-text-light:    #5C4A30;
+  --color-secondary-text:#8A7258;
+
+  /* Utility */
+  --color-border:        rgba(168, 114, 30, 0.14);
+  --color-border-bright: rgba(168, 114, 30, 0.30);
+  --color-error:         #C0392B;
+  --color-success:       #2E7D32;
+
+  /* Radii */
   --radius-button: 100px;
-  --radius-card: 10px;
-  --radius-small: 6px;
+  --radius-card:   16px;
+  --radius-small:  10px;
 
-  --shadow-card: 0 2px 8px rgba(103, 80, 164, 0.1);
-  --shadow-button: 0 4px 16px rgba(103, 80, 164, 0.25);
+  /* Shadows */
+  --shadow-card:   0 2px 16px rgba(120, 80, 20, 0.10), 0 1px 4px rgba(120, 80, 20, 0.06);
+  --shadow-button: 0 4px 18px rgba(168, 114, 30, 0.32);
+  --shadow-glow:   0 0 20px rgba(168, 114, 30, 0.18);
 
   background-color: var(--color-background);
   color: var(--color-text);
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 28rpx;
-  line-height: 1.5;
+  line-height: 1.55;
   box-sizing: border-box;
 }
 
+/* ── Pearl shimmer on placeholders ── */
+@keyframes gem-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes gold-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 view, text, image {
   box-sizing: border-box;

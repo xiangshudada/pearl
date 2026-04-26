@@ -1,0 +1,223 @@
+.profile-page {
+  min-height: 100vh;
+  background: var(--color-background);
+
+  &__scroll {
+    height: 100vh;
+  }
+
+  &__header {
+    background: linear-gradient(135deg, #6750A4 0%, #9c7ee8 100%);
+    padding: 60rpx 32rpx 48rpx;
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    gap: 24rpx;
+  }
+
+  &__not-login {
+    display: flex;
+    align-items: center;
+    gap: 24rpx;
+  }
+
+  &__avatar-wrap {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4rpx solid rgba(255,255,255,0.6);
+    flex-shrink: 0;
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__avatar-placeholder {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4rpx solid rgba(255,255,255,0.4);
+    flex-shrink: 0;
+
+    &--guest {
+      background: rgba(255,255,255,0.15);
+    }
+  }
+
+  &__avatar-text {
+    font-size: 48rpx;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  &__user-detail {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__nickname {
+    font-size: 36rpx;
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__user-id {
+    font-size: 22rpx;
+    color: rgba(255,255,255,0.7);
+    display: block;
+    margin-top: 6rpx;
+  }
+
+  &__login-hint {
+    font-size: 24rpx;
+    color: rgba(255,255,255,0.7);
+    display: block;
+    margin-top: 6rpx;
+  }
+
+  &__login-btn {
+    padding: 14rpx 32rpx;
+    background: rgba(255,255,255,0.25);
+    border-radius: var(--radius-button);
+    border: 2rpx solid rgba(255,255,255,0.5);
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:active {
+      opacity: 0.8;
+    }
+
+    &-text {
+      font-size: 26rpx;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  &__menu {
+    margin: 24rpx;
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  &__menu-item {
+    display: flex;
+    align-items: center;
+    padding: 28rpx 24rpx;
+    border-bottom: 1rpx solid var(--color-border);
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:active {
+      background: var(--color-surface);
+    }
+  }
+
+  &__menu-icon-wrap {
+    width: 72rpx;
+    height: 72rpx;
+    border-radius: var(--radius-small);
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__menu-icon {
+    font-size: 36rpx;
+  }
+
+  &__menu-content {
+    flex: 1;
+    margin-left: 20rpx;
+    min-width: 0;
+  }
+
+  &__menu-label {
+    font-size: 30rpx;
+    color: var(--color-text);
+    font-weight: 500;
+    display: block;
+  }
+
+  &__menu-desc {
+    font-size: 22rpx;
+    color: var(--color-secondary-text);
+    display: block;
+    margin-top: 4rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__badge {
+    background: #E91E63;
+    border-radius: 100rpx;
+    min-width: 36rpx;
+    height: 36rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8rpx;
+    margin-right: 8rpx;
+
+    &-text {
+      font-size: 20rpx;
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  &__menu-arrow {
+    font-size: 36rpx;
+    color: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  &__logout-wrap {
+    padding: 0 24rpx;
+    margin-top: 8rpx;
+  }
+
+  &__logout-btn {
+    height: 88rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:active {
+      background: var(--color-surface);
+    }
+  }
+
+  &__logout-text {
+    font-size: 28rpx;
+    color: var(--color-error);
+    font-weight: 500;
+  }
+}

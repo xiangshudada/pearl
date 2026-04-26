@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "mcp__figma__get_metadata",
+      "WebFetch(domain:developers.figma.com)",
+      "WebFetch(domain:forum.figma.com)",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__use_figma",
+      "Bash(npx skills *)",
+      "Bash(dir D:/study/pearl/src /s /b)",
+      "Bash(cmd *)",
+      "mcp__figma__get_design_context",
+      "Bash(python -m py_compile app/config.py app/database.py app/deps.py app/main.py)",
+      "Bash(python -m py_compile app/models/user.py app/models/material.py app/models/design.py app/models/address.py app/models/coupon.py app/models/order.py)",
+      "Bash(python -m py_compile app/schemas/common.py app/schemas/auth.py app/schemas/user.py app/schemas/material.py app/schemas/design.py app/schemas/address.py app/schemas/coupon.py)",
+      "Bash(python -m py_compile app/routers/auth.py app/routers/materials.py app/routers/designs.py app/routers/addresses.py app/routers/coupons.py app/routers/admin.py)",
+      "Bash(node -e ' *)",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(npm run *)",
+      "Bash(grep -v \"^$\")",
+      "Bash(npx taro *)"
+    ]
+  }
+}

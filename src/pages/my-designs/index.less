@@ -1,0 +1,275 @@
+.my-designs-page {
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+
+  &__not-login {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80rpx 48rpx;
+    gap: 16rpx;
+  }
+
+  &__not-login-icon {
+    font-size: 80rpx;
+    margin-bottom: 8rpx;
+  }
+
+  &__not-login-title {
+    font-size: 36rpx;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__not-login-desc {
+    font-size: 26rpx;
+    color: var(--color-secondary-text);
+    text-align: center;
+  }
+
+  &__login-btn {
+    margin-top: 24rpx;
+    padding: 24rpx 72rpx;
+    background: var(--color-primary);
+    border-radius: var(--radius-button);
+    box-shadow: var(--shadow-button);
+    cursor: pointer;
+
+    &:active {
+      opacity: 0.8;
+    }
+
+    &-text {
+      font-size: 30rpx;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  &__new-btn {
+    display: flex;
+    align-items: center;
+    gap: 16rpx;
+    margin: 24rpx;
+    padding: 32rpx;
+    background: var(--color-white);
+    border-radius: var(--radius-card);
+    border: 2rpx dashed var(--color-primary);
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:active {
+      background: rgba(103, 80, 164, 0.05);
+    }
+  }
+
+  &__new-icon {
+    font-size: 48rpx;
+    color: var(--color-primary);
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  &__new-text {
+    font-size: 30rpx;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  &__loading {
+    padding: 80rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-text {
+      font-size: 28rpx;
+      color: var(--color-secondary-text);
+    }
+  }
+
+  &__empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80rpx 48rpx;
+    gap: 16rpx;
+  }
+
+  &__empty-icon {
+    font-size: 80rpx;
+  }
+
+  &__empty-title {
+    font-size: 32rpx;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__empty-desc {
+    font-size: 26rpx;
+    color: var(--color-secondary-text);
+    text-align: center;
+  }
+
+  &__go-design {
+    margin-top: 24rpx;
+    padding: 20rpx 56rpx;
+    background: var(--color-primary);
+    border-radius: var(--radius-button);
+    box-shadow: var(--shadow-button);
+    cursor: pointer;
+
+    &:active {
+      opacity: 0.8;
+    }
+
+    &-text {
+      font-size: 28rpx;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  &__list {
+    flex: 1;
+  }
+
+  &__card {
+    display: flex;
+    align-items: center;
+    gap: 20rpx;
+    background: var(--color-white);
+    margin: 0 24rpx 16rpx;
+    padding: 24rpx;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  &__card-preview {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__card-beads {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6rpx;
+    padding: 8rpx;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__card-bead {
+    width: 24rpx;
+    height: 24rpx;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  &__card-bead-placeholder {
+    font-size: 36rpx;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  &__card-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__card-name {
+    font-size: 30rpx;
+    font-weight: 700;
+    color: var(--color-text);
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8rpx;
+  }
+
+  &__card-date {
+    font-size: 22rpx;
+    color: var(--color-secondary-text);
+  }
+
+  &__card-price {
+    font-size: 26rpx;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  &__card-status-row {
+    display: flex;
+    gap: 8rpx;
+    margin-top: 10rpx;
+  }
+
+  &__status-badge {
+    padding: 4rpx 12rpx;
+    border-radius: 100rpx;
+
+    &--draft {
+      background: #f5f5f5;
+    }
+
+    &--completed {
+      background: rgba(103, 80, 164, 0.1);
+    }
+  }
+
+  &__status-text {
+    font-size: 20rpx;
+    color: var(--color-secondary-text);
+  }
+
+  &__published-badge {
+    padding: 4rpx 12rpx;
+    border-radius: 100rpx;
+    background: rgba(56, 106, 32, 0.1);
+  }
+
+  &__published-text {
+    font-size: 20rpx;
+    color: var(--color-success);
+  }
+
+  &__continue-btn {
+    padding: 16rpx 24rpx;
+    border: 2rpx solid var(--color-primary);
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s;
+
+    &:active {
+      background: rgba(103, 80, 164, 0.08);
+    }
+  }
+
+  &__continue-text {
+    font-size: 24rpx;
+    color: var(--color-primary);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}

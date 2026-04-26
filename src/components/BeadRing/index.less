@@ -1,0 +1,29 @@
+.bead-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__track {
+    pointer-events: none;
+  }
+
+  &__center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  &__bead {
+    transition: transform 0.15s ease;
+    z-index: 3;
+
+    &--interactive {
+      &:active {
+        transform: scale(1.4);
+        box-shadow: 0 2px 8px rgba(103, 80, 164, 0.5) !important;
+      }
+    }
+  }
+}

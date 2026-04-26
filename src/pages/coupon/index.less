@@ -1,0 +1,256 @@
+.coupon-page {
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+
+  &__tabs {
+    display: flex;
+    background: var(--color-white);
+    border-bottom: 1rpx solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  &__tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8rpx;
+    padding: 28rpx 0;
+    border-bottom: 4rpx solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &--active {
+      border-bottom-color: var(--color-primary);
+
+      .coupon-page__tab-text {
+        color: var(--color-primary);
+        font-weight: 700;
+      }
+    }
+  }
+
+  &__tab-text {
+    font-size: 28rpx;
+    color: var(--color-secondary-text);
+  }
+
+  &__tab-badge {
+    background: var(--color-primary);
+    border-radius: 100rpx;
+    min-width: 32rpx;
+    height: 32rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6rpx;
+
+    &-text {
+      font-size: 18rpx;
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  &__scroll {
+    flex: 1;
+    padding-top: 24rpx;
+  }
+
+  &__loading {
+    padding: 80rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-text {
+      font-size: 28rpx;
+      color: var(--color-secondary-text);
+    }
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80rpx 48rpx;
+    gap: 16rpx;
+    text-align: center;
+  }
+
+  &__empty-icon {
+    font-size: 80rpx;
+    margin-bottom: 8rpx;
+  }
+
+  &__empty-title {
+    font-size: 32rpx;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  &__empty-desc {
+    font-size: 26rpx;
+    color: var(--color-secondary-text);
+  }
+
+  &__card {
+    margin: 0 24rpx 24rpx;
+    display: flex;
+    align-items: stretch;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    background: var(--color-white);
+
+    &--dimmed {
+      opacity: 0.6;
+    }
+  }
+
+  &__card-left {
+    width: 180rpx;
+    background: linear-gradient(135deg, #6750A4 0%, #9c7ee8 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32rpx 16rpx;
+    gap: 8rpx;
+    flex-shrink: 0;
+  }
+
+  &__amount-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rpx;
+  }
+
+  &__amount {
+    font-size: 56rpx;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  &__amount-symbol {
+    font-size: 28rpx;
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    margin-bottom: 4rpx;
+  }
+
+  &__free-ship {
+    font-size: 36rpx;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  &__card-type {
+    font-size: 20rpx;
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.15);
+    padding: 4rpx 12rpx;
+    border-radius: 100rpx;
+  }
+
+  &__card-divider {
+    width: 24rpx;
+    background: var(--color-surface);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &__notch {
+    width: 32rpx;
+    height: 32rpx;
+    border-radius: 50%;
+    background: var(--color-background);
+    position: absolute;
+    left: -4rpx;
+
+    &--top {
+      top: -16rpx;
+    }
+
+    &--bottom {
+      bottom: -16rpx;
+    }
+  }
+
+  &__dashed-line {
+    flex: 1;
+    width: 2rpx;
+    border-left: 2rpx dashed var(--color-border);
+    margin: 20rpx 0;
+  }
+
+  &__card-right {
+    flex: 1;
+    padding: 28rpx 24rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10rpx;
+  }
+
+  &__card-name {
+    font-size: 30rpx;
+    font-weight: 700;
+    color: var(--color-text);
+    display: block;
+  }
+
+  &__card-condition {
+    font-size: 22rpx;
+    color: var(--color-secondary-text);
+    display: block;
+  }
+
+  &__card-expire {
+    font-size: 22rpx;
+    color: var(--color-secondary-text);
+    display: block;
+  }
+
+  &__card-used-at {
+    font-size: 20rpx;
+    color: #999;
+    display: block;
+  }
+
+  &__stamp {
+    position: absolute;
+    right: 24rpx;
+    top: 50%;
+    transform: translateY(-50%) rotate(-12deg);
+    padding: 8rpx 16rpx;
+    border-radius: 6rpx;
+    border: 4rpx solid;
+
+    &--used {
+      border-color: #999;
+    }
+
+    &--expired {
+      border-color: var(--color-error);
+    }
+  }
+
+  &__stamp-text {
+    font-size: 28rpx;
+    font-weight: 700;
+    color: #999;
+
+    .coupon-page__stamp--expired & {
+      color: var(--color-error);
+    }
+  }
+}

@@ -65,12 +65,10 @@ export default function DesignerPage() {
   const loadCategories = async () => {
     try {
       const cats = await getCategories()
-      const tops = cats.filter((c) => c.parent_id === null)
-      setTopCategories(tops)
-      if (tops.length > 0) {
-        setActiveTabId(tops[0].id)
-        const subs = cats.filter((c) => c.parent_id === tops[0].id)
-        setSubCategories(subs)
+      setTopCategories(cats)
+      if (cats.length > 0) {
+        setActiveTabId(cats[0].id)
+        setSubCategories(cats[0].children || [])
         setActiveCategoryId(USING_CATEGORY_ID)
       }
     } catch {
@@ -78,16 +76,11 @@ export default function DesignerPage() {
     }
   }
 
-  const handleTabChange = async (tabId: number) => {
+  const handleTabChange = (tabId: number) => {
     setActiveTabId(tabId)
     setActiveCategoryId(USING_CATEGORY_ID)
-    try {
-      const cats = await getCategories()
-      const subs = cats.filter((c) => c.parent_id === tabId)
-      setSubCategories(subs)
-    } catch {
-      // ignore
-    }
+    const tab = topCategories.find((t) => t.id === tabId)
+    setSubCategories(tab?.children || [])
   }
 
   const loadMaterials = async () => {
@@ -252,15 +245,17 @@ export default function DesignerPage() {
         {/* Tab + Search row */}
         <View className='designer-page__tab-row'>
           <ScrollView className='designer-page__tabs' scrollX showScrollbar={false}>
-            {topCategories.map((cat) => (
-              <View
-                key={cat.id}
-                className={`designer-page__tab ${activeTabId === cat.id ? 'designer-page__tab--active' : ''}`}
-                onClick={() => handleTabChange(cat.id)}
-              >
-                <Text className='designer-page__tab-text'>{cat.name}</Text>
-              </View>
-            ))}
+            <View className='designer-page__tabs-inner'>
+              {topCategories.map((cat) => (
+                <View
+                  key={cat.id}
+                  className={`designer-page__tab ${activeTabId === cat.id ? 'designer-page__tab--active' : ''}`}
+                  onClick={() => handleTabChange(cat.id)}
+                >
+                  <Text className='designer-page__tab-text'>{cat.name}</Text>
+                </View>
+              ))}
+            </View>
           </ScrollView>
           <View className='designer-page__search-icon' onClick={() => setShowSearch(true)}>
             <Text>🔍</Text>

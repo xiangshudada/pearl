@@ -3,8 +3,8 @@ import type { DesignItem } from '@/types'
 /**
  * Format price as ¥XX.XX
  */
-export function formatPrice(price: number): string {
-  return `¥${price.toFixed(2)}`
+export function formatPrice(price: number | string): string {
+  return `¥${Number(price).toFixed(2)}`
 }
 
 /**
@@ -24,7 +24,7 @@ export function formatDate(dateStr: string): string {
  * Formula: Σ(size_mm × quantity) ÷ 10
  */
 export function calcWristSize(beads: DesignItem[]): number {
-  const total = beads.reduce((sum, b) => sum + b.size_mm * b.quantity, 0)
+  const total = beads.reduce((sum, b) => sum + Number(b.size_mm) * b.quantity, 0)
   return Math.round(total) / 10
 }
 
@@ -32,7 +32,7 @@ export function calcWristSize(beads: DesignItem[]): number {
  * Calculate total price from beads
  */
 export function calcTotalPrice(beads: DesignItem[]): number {
-  return beads.reduce((sum, b) => sum + b.price * b.quantity, 0)
+  return beads.reduce((sum, b) => sum + Number(b.price) * b.quantity, 0)
 }
 
 /**
